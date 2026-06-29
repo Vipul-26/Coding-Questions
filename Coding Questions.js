@@ -131,13 +131,13 @@ function customHook(inputArray) {
 // Using Reduce
 
 function groupBy(users) {
-    const groupedUsers = users.reduce((acc, item) => {
-        acc[item.dept] = [...(acc[item.dept] || []), item.name];
-        return acc;
-    }, {});
+  const groupedUsers = users.reduce((acc, item) => {
+    acc[item.dept] = [...(acc[item.dept] || []), item.name];
+    return acc;
+  }, {});
 
-    return groupedUsers;
-};
+  return groupedUsers;
+}
 
 // Highest Salary Employee (const emp = [{ name: "A", salary: 1000 },{ name: "B", salary: 5000 },{ name: "C", salary: 3000 }];)
 
@@ -145,7 +145,7 @@ function customHook(inputArray) {
   let highestSalary = 0;
   let highestSalaryObject;
   for (const item of inputArray) {
-    if(item.salary > highestSalary) {
+    if (item.salary > highestSalary) {
       highestSalary = item.salary;
       highestSalaryObject = item;
     }
@@ -156,8 +156,8 @@ function customHook(inputArray) {
 // Reduce Version
 
 function customHook(inputArray) {
-  const maxSalaryObj = inputArray.reduce((max, item) =>{
-    return item.salary > max ? item : max
+  const maxSalaryObj = inputArray.reduce((max, item) => {
+    return item.salary > max ? item : max;
   }, inputArray[0].salary);
 
   return maxSalaryObj;
@@ -167,7 +167,7 @@ function customHook(inputArray) {
 
 function customHook(inputArray) {
   return inputArray.reduce((acc, item) => {
-    return item.salary + acc
+    return item.salary + acc;
   }, 0);
 }
 
@@ -176,7 +176,7 @@ function customHook(inputArray) {
 function customHook(obj1, obj2) {
   const mergedObj = {
     ...obj1,
-    ...obj2
+    ...obj2,
   };
   return mergedObj;
 }
@@ -187,8 +187,8 @@ function customHook(inputArray) {
   function flattenArray(inputArray) {
     let flattenedArray = [];
     for (let i of inputArray) {
-      if(Array.isArray(i)) {
-        flattenedArray.push(...flattenArray(i))
+      if (Array.isArray(i)) {
+        flattenedArray.push(...flattenArray(i));
       } else {
         flattenedArray.push(i);
       }
@@ -204,17 +204,17 @@ function customHook(inputArray) {
 // Reverse Words ('I love react')
 
 function customHook(str) {
-  return str.spit(' ').reverse().join(' ');
+  return str.spit(" ").reverse().join(" ");
 }
 
 // Longest word ("I love JavaScript very much")
 
 function customHook(str) {
-  let newStrArray = str.split(' ');
+  let newStrArray = str.split(" ");
   let maxLength = newStrArray[0].length;
-  let maxLengthWord = '';
-  for(let i of newStrArray) {
-    if(i.length > maxLength) {
+  let maxLengthWord = "";
+  for (let i of newStrArray) {
+    if (i.length > maxLength) {
       maxLength = i.length;
       maxLengthWord = i;
     }
@@ -224,4 +224,159 @@ function customHook(str) {
 
 // Sort By Age
 
-users.sort((a,b)=>a.age-b.age);
+users.sort((a, b) => a.age - b.age);
+
+// Deep Copy (const obj = {name: "Vipul",address: {city: "Pune"}};)
+
+function deepCopy(obj) {
+  let newObj = {};
+  for (let key in obj) {
+    if (typeof obj[key] === "object" && obj[key] !== null) {
+      newObj[key] = deepCopy(obj[key]);
+    } else {
+      newObj[key] = obj[key];
+    }
+  }
+  return newObj;
+}
+
+// Deep Freeze (const obj = {name: "Vipul",address: {city: "Pune"}};)
+
+function deepFreeze(obj) {
+  for (let key in obj) {
+    if (typeof obj[key] === "object" && obj[key] !== null) {
+      deepFreeze(obj[key]);
+    }
+  }
+  Object.freeze(obj);
+  return obj;
+}
+
+// Deep Equal (const obj1 = {name: "Vipul",address: {city: "Pune"}}; const obj2 = {name: "Vipul",address: {city: "Pune"}};)
+
+function deepEqual(obj1, obj2) {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  for (let key in obj1) {
+    if (typeof obj1[key] === "object" && obj1[key] !== null) {
+      if (!deepEqual(obj1[key], obj2[key])) {
+        return false;
+      }
+    } else {
+      if (obj1[key] !== obj2[key]) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+// Flatten Object (const obj = {name: "Vipul", address: {city: "Pune"}};)
+
+function flattenObject(obj, parentKey = "", res = {}) {
+  for (let key in obj) {
+    let propName = parentKey ? `${parentKey}.${key}` : key;
+    if (
+      typeof obj[key] === "object" &&
+      obj[key] !== null &&
+      !Array.isArray(obj[key])
+    ) {
+      flattenObject(obj[key], propName, res);
+    } else {
+      res[propName] = obj[key];
+    }
+  }
+  return res;
+}
+
+// Implement get (get(obj,'a.b.c'))
+
+function implementGet(obj, path) {
+  const splittedPath = path.split(".");
+  let currentValue;
+  for (let i of splittedPath) {
+    currentValue = currentValue ? currentValue[i] : obj[i];
+  }
+  return currentValue;
+}
+
+// Implement set (set(obj,'a.b.c',100))
+
+function implementSet(obj, path, value) {
+  const splittedPath = path.split(".");
+  let currentValue = obj;
+  for (let i = 0; i < splittedPath.length; i++) {
+    if (i === splittedPath.length - 1) {
+      currentValue[splittedPath[i]] = value;
+    } else {
+      currentValue[splittedPath[i]] = currentValue[splittedPath[i]] || {};
+      currentValue = currentValue[splittedPath[i]];
+    }
+  }
+  return obj;
+}
+
+// Two Sum ([2, 6, 7, 8], 9))
+
+var twoSum = function (nums, target) {
+  let index = [];
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i; j < nums.length; j++) {
+      if (nums[i] + nums[j] === target) {
+        index.push(i, j);
+      }
+    }
+  }
+  return index;
+};
+
+// Debounce debounce(fn,500)
+
+function debounce(func, delay) {
+  let timer;
+  return function () {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func();
+    }, delay);
+  };
+}
+
+// Throttle throttle(fn,500)
+
+function throttle(fn, delay) {
+  let isThrottled = false;
+  return function () {
+    if (isThrottled) return;
+    fn();
+    isThrottled = true;
+    setTimeout(() => {
+      isThrottled = false;
+    }, delay);
+  };
+}
+
+// Memoize memoize(fn)
+
+function memoize(fn) {
+  const cache = {};
+  return function (x) {
+    if (cache[x]) {
+      return cache[x];
+    }
+    cache[x] = fn(x);
+    return cache[x];
+  };
+}
+
+function square(x) {
+  return x * x;
+}
+
+const memoizedValue = memoize(square);
+console.log(memoizedValue(5));
+console.log(memoizedValue(5));
