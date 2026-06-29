@@ -128,6 +128,17 @@ function customHook(inputArray) {
   return myObj;
 }
 
+// Using Reduce
+
+function groupBy(users) {
+    const groupedUsers = users.reduce((acc, item) => {
+        acc[item.dept] = [...(acc[item.dept] || []), item.name];
+        return acc;
+    }, {});
+
+    return groupedUsers;
+};
+
 // Highest Salary Employee (const emp = [{ name: "A", salary: 1000 },{ name: "B", salary: 5000 },{ name: "C", salary: 3000 }];)
 
 function customHook(inputArray) {
