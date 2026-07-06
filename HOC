@@ -1,0 +1,15 @@
+import React from 'react';
+
+const HOC = (WrapperComponent) => {
+  return function (props) {
+    const a = true;
+    if (a === true) {
+      return <h1>Yes I am from HOC</h1>
+    }
+    return <WrapperComponent {...props} />
+  }
+}
+
+export default HOC;
+
+const updatedFunctionality = HOC(MyComponent);
