@@ -1,98 +1,10 @@
-// API Call + Data Show on UI
+// API Call + Data Show on UI with (Loading + Error) state + Search + Filtering + Sorting + Pagination
 
-<input id="search" placeholder="Search Products">
+HTML:
 
-<div id="loader">Loading...</div>
 
-<div id="error"></div>
+CSS:
 
-<div id="products"></div>
 
-html, body {
-  height: 100%;
-  width: 100%;
-}
+JS:
 
-#loader {
-  margin-top: 1rem;
-}
-
-#products {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-top: 1rem;
-}
-
-.card {
-  border: 1px solid #ddd;
-  padding: 16px;
-  border-radius: 8px;
-  width: 200px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-let allProducts = [];
-
-const debounce = (fn, delay) => {
-  let timer;
-  return function (...args) {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      fn(...args);
-    }, delay);
-  }
-};
-
-const searchedInput = document.getElementById('search');
-
-const search = (value) => {
-  const filteredProducts = allProducts.filter((data) => {
-    return data.title.toLowerCase().includes(value.toLowerCase());
-  });
-  renderProducts(filteredProducts);
-};
-
-const debouncedSearch = debounce(search, 500);
-
-searchedInput.addEventListener('input', (e) => {
-  debouncedSearch(e.target.value);
-});
-
-const renderProducts = (data) => {
-  const productsContainer = document.getElementById('products');
-  if (!data.length) {
-    productsContainer.innerHTML = '<p>No Products Found</p>'
-  } else {
-    productsContainer.innerHTML = '';
-    data.forEach((product) => {
-      const card = document.createElement('div');
-      card.classList.add('card');
-      card.innerHTML = `
-      <h3>${product.title}</h3>
-      <p>${product.category}</p>
-    `;
-      productsContainer.appendChild(card);
-    });
-  }
-};
-
-const fetchProducts = async () => {
-  try {
-    document
-      .getElementById('loader')
-      .style.display = 'block';
-    const response = await fetch('https://dummyjson.com/products?limit=20');
-    const data = await response.json();
-    allProducts = data.products;  
-    renderProducts(data.products);
-  } catch (error) {
-    document.getElementById('error').innerText = error.message;
-  } finally {
-    document
-      .getElementById('loader')
-      .style.display = 'none';
-  }
-};
-
-fetchProducts();
