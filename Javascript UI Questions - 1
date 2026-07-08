@@ -2,9 +2,219 @@
 
 HTML:
 
+<input id="search" placeholder="Search for products">
+<div id="loader"></div>
+<div id="error"></div>
+<div id="category-dropdown"></div>
+<div id="sortby-dropdown"></div>
+<div id="products"></div>
+<div id="pagination"></div>
 
 CSS:
 
+#search {
+  margin-bottom: 1rem;
+}
+
+#category-dropdown {
+  margin-bottom: 1rem;
+}
+
+#sortby-dropdown {
+  margin-bottom: 1rem;
+}
+
+#pagination {
+  margin-top: 1rem;
+}
+
+.productContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.productCard {
+  border: 1px solid red;
+  width: 200px;
+  padding: 1rem;
+}
 
 JS:
+
+let filteredProducts = [];
+let currentPage = 1;
+const itemsPerPage = 10;
+let currentCategory = 'default';
+let currentSort = 'Default';
+
+const renderPaginationControl = (totalPages) => {
+  const paginationContainer = document.getElementById('pagination');
+  paginationContainer.innerHTML = `
+    <button id="prev-button" ${currentPage === 1 ? 'disabled' : ''}>Prev</button>
+    <button id="next-button" ${currentPage >= totalPages ? 'disabled' : ''}>Next</button>
+  `;
+  const prevButton = document.getElementById('prev-button');
+  const nextButton = document.getElementById('next-button');
+
+  prevButton.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage = currentPage - 1;
+      updateUI();
+    }
+  });
+  nextButton.addEventListener('click', () => {
+    if (currentPage < totalPages) {
+      currentPage = currentPage + 1;
+      updateUI();
+    }
+  });
+};
+
+const updateUI = () => {
+  const allFilteredProducts = getFilteredAndSortedProducts();
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  renderProducts(allFilteredProducts.slice(startIndex, endIndex));
+  renderPaginationControl(Math.ceil(allFilteredProducts.length / itemsPerPage));
+};
+
+const renderProducts = (productData) => {
+  const productContainer = document.getElementById('products');
+  productContainer.classList.add('productContainer');
+  productContainer.innerHTML = '';
+  if (productData.length === 0) {
+    productContainer.innerHTML = '<p>No products found</p>';
+  }
+  else {
+    productData.forEach((product) => {
+      const productDiv = document.createElement('div');
+      productDiv.classList.add('productCard');
+      productDiv.innerHTML = `
+      <h6>${product.title}</h6>
+      <h6>Category: ${product.category}</h6>
+      <h6>${product.price}</h6>
+    `;
+      productContainer.appendChild(productDiv);
+    });
+  }
+};
+
+const getFilteredAndSortedProducts = () => {
+  let products = [];
+  if (currentCategory === 'default') {
+    products = [...filteredProducts];
+  } else {
+    products = filteredProducts.filter((product) => {
+      return product.category === currentCategory
+    });
+  }
+  if (currentSort === 'Name A-Z') {
+    products.sort((a, b) => a.title.localeCompare(b.title));
+  } else if (currentSort === 'Name Z-A') {
+    products.sort((a, b) => b.title.localeCompare(a.title));
+  } else if (currentSort === 'Price Low to High') {
+    products.sort((a, b) => a.price - b.price);
+  } else if (currentSort === 'Price High to Low') {
+    products.sort((a, b) => b.price - a.price);
+  }
+  return products;
+};
+
+const renderCategories = (categoryData) => {
+  const uniqueCategoryDataSet = new Set(categoryData);
+  const uniqueCategoryDataArray = [...uniqueCategoryDataSet];
+  const categoryContainer = document.getElementById('category-dropdown');
+  categoryContainer.innerHTML = '';
+  const categoryDiv = document.createElement('div');
+  categoryDiv.innerHTML = `
+    <select name="category" id="category-select">
+      <option value="default">Default</option>
+      ${uniqueCategoryDataArray.map((uniqueCategory) => {
+    return `<option value="${uniqueCategory}">${uniqueCategory}</option>`
+  })}
+    </select>
+  `;
+  categoryContainer.appendChild(categoryDiv);
+
+  const categoryElement = document.getElementById('category-select');
+  categoryElement.addEventListener('change', (e) => {
+    currentCategory = e.target.value;
+    updateUI();
+  });
+};
+
+const renderSortBy = () => {
+  const sortByArray = ["Default", "Name A-Z", "Name Z-A", "Price Low to High", "Price High to Low"];
+  const sortByContainer = document.getElementById('sortby-dropdown');
+  sortByContainer.innerHTML = '';
+  const sortbyDiv = document.createElement('div');
+  sortbyDiv.innerHTML = `
+    <select name="sortby" id="sortby-select">
+      ${sortByArray.map((data) => {
+    return `<option value="${data}">${data}</option>`
+  })}
+    </select>
+  `;
+  sortByContainer.appendChild(sortbyDiv);
+
+  const sortByElement = document.getElementById('sortby-select');
+  sortByElement.addEventListener('change', (e) => {
+    currentSort = e.target.value;
+    updateUI();
+  });
+};
+
+const fetchProducts = async () => {
+  const loaderElement = document.getElementById('loader');
+  const errorElement = document.getElementById('error');
+  try {
+    loaderElement.innerText = 'Loading...';
+    const response = await fetch('https://dummyjson.com/products?limit=51');
+    const data = await response.json();
+    if (!data || (data.products.length === 0)) {
+      errorElement.innerText = 'No Products Found';
+    } else {
+      let categoryData = [];
+      filteredProducts = data.products;
+      data.products.map((product) => {
+        categoryData.push(product.category);
+      });
+      renderCategories(categoryData);
+      renderSortBy();
+      updateUI();
+    }
+  } catch (error) {
+    errorElement.innerText = error.message;
+  } finally {
+    loaderElement.innerText = '';
+  }
+};
+
+fetchProducts();
+
+const debounce = (fn, delay) => {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn(...args);
+    }, delay);
+  }
+};
+
+const searchFunc = (value) => {
+  const newFilteredProducts = filteredProducts.filter((product) => {
+    return product.title.toLowerCase().includes(value.toLowerCase());
+  });
+  renderProducts(newFilteredProducts.slice(currentPage === 1 ? currentPage - 1 : (currentPage - 1) * itemsPerPage, currentPage * itemsPerPage));
+};
+
+const searchElement = document.getElementById('search');
+
+const debouncedSearch = debounce(searchFunc, 500);
+
+searchElement.addEventListener('input', (e) => {
+  debouncedSearch(e.target.value);
+});
 
