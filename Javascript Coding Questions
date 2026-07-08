@@ -371,19 +371,33 @@ var twoSum = function (nums, target) {
   </script>
 </body>
 
-// Throttle throttle(fn,500)
+// Throttling Window Scroll
 
-function throttle(fn, delay) {
-  let isThrottled = false;
-  return function () {
-    if (isThrottled) return;
-    fn();
-    isThrottled = true;
-    setTimeout(() => {
-      isThrottled = false;
-    }, delay);
-  };
-}
+<body style="height: 30000px;">
+  <script>
+    function throttle(fn, delay) {
+      let isWaiting = false;
+      return function(...args) {
+        if (isWaiting) return;
+        
+        fn(...args);
+        isWaiting = true;
+        
+        setTimeout(() => {
+          isWaiting = false;
+        }, delay);
+      }
+    }
+
+    const handleScroll = () => {
+      console.log(window.scrollY);
+    };
+
+    const throttledScroll = throttle(handleScroll, 3000);
+
+    window.addEventListener('scroll', throttledScroll);
+  </script>
+</body>
 
 // Memoize memoize(fn)
 
