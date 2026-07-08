@@ -345,17 +345,31 @@ var twoSum = function (nums, target) {
   }
 };
 
-// Debounce debounce(fn,500)
+// Debouncing Input Field
 
-function debounce(func, delay) {
-  let timer;
-  return function () {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func();
-    }, delay);
-  };
-}
+<body>
+  <input id="search" type="text" placeholder="Search here" />
+  <script>
+    function debounce(fn, delay) {
+      let timer;
+      return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          fn(...args);
+        }, delay);Ï
+      }
+    }
+    const search = (value) => {
+      console.log(value);
+    };
+
+    const debouncedSearch = debounce(search, 500);
+
+    document.getElementById('search').addEventListener('input', (e) => {
+      debouncedSearch(e.target.value);
+    });
+  </script>
+</body>
 
 // Throttle throttle(fn,500)
 
