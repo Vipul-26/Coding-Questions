@@ -504,37 +504,6 @@ This returns `0 2 2`.
 
 ---
 
-###### 17. What's the output?
-
-```javascript
-function getPersonInfo(one, two, three) {
-  console.log(one);
-  console.log(two);
-  console.log(three);
-}
-
-const person = 'Lydia';
-const age = 21;
-
-getPersonInfo`${person} is ${age} years old`;
-```
-
-- A: `"Lydia"` `21` `["", " is ", " years old"]`
-- B: `["", " is ", " years old"]` `"Lydia"` `21`
-- C: `"Lydia"` `["", " is ", " years old"]` `21`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: B
-
-If you use tagged template literals, the value of the first argument is always an array of the string values. The remaining arguments get the values of the passed expressions!
-
-</p>
-</details>
-
----
-
 ###### 18. What's the output?
 
 ```javascript
@@ -1029,45 +998,6 @@ console.log(typeof sayHi());
 The `sayHi` function returns the returned value of the immediately invoked function expression (IIFE). This function returned `0`, which is type `"number"`.
 	
 FYI: `typeof` can return the following list of values: `undefined`, `boolean`, `number`, `bigint`, `string`, `symbol`, `function` and `object`. Note that `typeof null` returns `"object"`.
-
-</p>
-</details>
-
----
-
-###### 35. Which of these values are falsy?
-
-```javascript
-0;
-new Number(0);
-('');
-(' ');
-new Boolean(false);
-undefined;
-```
-
-- A: `0`, `''`, `undefined`
-- B: `0`, `new Number(0)`, `''`, `new Boolean(false)`, `undefined`
-- C: `0`, `''`, `new Boolean(false)`, `undefined`
-- D: All of them are falsy
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: A
-
-There are 8 falsy values:
-
-- `undefined`
-- `null`
-- `NaN`
-- `false`
-- `''` (empty string)
-- `0`
-- `-0`
-- `0n` (BigInt(0))
-
-Function constructors, like `new Number` and `new Boolean` are truthy.
 
 </p>
 </details>
@@ -2076,38 +2006,6 @@ The `Labrador` class receives two arguments, `name` since it extends `Dog`, and 
 
 ---
 
-###### 67. What's the output?
-
-```javascript
-// index.js
-console.log('running index.js');
-import { sum } from './sum.js';
-console.log(sum(1, 2));
-
-// sum.js
-console.log('running sum.js');
-export const sum = (a, b) => a + b;
-```
-
-- A: `running index.js`, `running sum.js`, `3`
-- B: `running sum.js`, `running index.js`, `3`
-- C: `running sum.js`, `3`, `running index.js`
-- D: `running index.js`, `undefined`, `running sum.js`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: B
-
-With the `import` keyword, all imported modules are _pre-parsed_. This means that the imported modules get run _first_, and the code in the file that imports the module gets executed _after_.
-
-This is a difference between `require()` in CommonJS and `import`! With `require()`, you can load dependencies on demand while the code is being run. If we had used `require` instead of `import`, `running index.js`, `running sum.js`, `3` would have been logged to the console.
-
-</p>
-</details>
-
----
-
 ###### 68. What's the output?
 
 ```javascript
@@ -2154,66 +2052,6 @@ console.log(name.padStart(2));
 With the `padStart` method, we can add padding to the beginning of a string. The value passed to this method is the _total_ length of the string together with the padding. The string `"Lydia Hallie"` has a length of `12`. `name.padStart(13)` inserts 1 space at the start of the string, because 12 + 1 is 13.
 
 If the argument passed to the `padStart` method is smaller than the length of the array, no padding will be added.
-
-</p>
-</details>
-
----
-
-###### 70. What's the output?
-
-```javascript
-console.log('🥑' + '💻');
-```
-
-- A: `"🥑💻"`
-- B: `257548`
-- C: A string containing their code points
-- D: Error
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: A
-
-With the `+` operator, you can concatenate strings. In this case, we are concatenating the string `"🥑"` with the string `"💻"`, resulting in `"🥑💻"`.
-
-</p>
-</details>
-
----
-
-###### 71. How can we log the values that are commented out after the console.log statement?
-
-```javascript
-function* startGame() {
-  const answer = yield 'Do you love JavaScript?';
-  if (answer !== 'Yes') {
-    return "Oh wow... Guess we're done here";
-  }
-  return 'JavaScript loves you back ❤️';
-}
-
-const game = startGame();
-console.log(/* 1 */); // Do you love JavaScript?
-console.log(/* 2 */); // JavaScript loves you back ❤️
-```
-
-- A: `game.next("Yes").value` and `game.next().value`
-- B: `game.next.value("Yes")` and `game.next.value()`
-- C: `game.next().value` and `game.next("Yes").value`
-- D: `game.next.value()` and `game.next.value("Yes")`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: C
-
-A generator function "pauses" its execution when it sees the `yield` keyword. First, we have to let the function yield the string "Do you love JavaScript?", which can be done by calling `game.next().value`.
-
-Every line is executed, until it finds the first `yield` keyword. There is a `yield` keyword on the first line within the function: the execution stops with the first yield! _This means that the variable `answer` is not defined yet!_
-
-When we call `game.next("Yes").value`, the previous `yield` is replaced with the value of the parameters passed to the `next()` function, `"Yes"` in this case. The value of the variable `answer` is now equal to `"Yes"`. The condition of the if-statement returns `false`, and `JavaScript loves you back ❤️` gets logged.
 
 </p>
 </details>
@@ -2488,43 +2326,6 @@ The third time, we pass `5 * 2` to the function which gets evaluated to `10`. Th
 
 ---
 
-###### 79. What is the output?
-
-```javascript
-const myLifeSummedUp = ['☕', '💻', '🍷', '🍫'];
-
-for (let item in myLifeSummedUp) {
-  console.log(item);
-}
-
-for (let item of myLifeSummedUp) {
-  console.log(item);
-}
-```
-
-- A: `0` `1` `2` `3` and `"☕"` `"💻"` `"🍷"` `"🍫"`
-- B: `"☕"` `"💻"` `"🍷"` `"🍫"` and `"☕"` `"💻"` `"🍷"` `"🍫"`
-- C: `"☕"` `"💻"` `"🍷"` `"🍫"` and `0` `1` `2` `3`
-- D: `0` `1` `2` `3` and `{0: "☕", 1: "💻", 2: "🍷", 3: "🍫"}`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: A
-
-With a _for-in_ loop, we can iterate over **enumerable** properties. In an array, the enumerable properties are the "keys" of array elements, which are actually their indexes. You could see an array as:
-
-`{0: "☕", 1: "💻", 2: "🍷", 3: "🍫"}`
-
-Where the keys are the enumerable properties. `0` `1` `2` `3` get logged.
-
-With a _for-of_ loop, we can iterate over **iterables**. An array is an iterable. When we iterate over the array, the variable "item" is equal to the element it's currently iterating over, `"☕"` `"💻"` `"🍷"` `"🍫"` get logged.
-
-</p>
-</details>
-
----
-
 ###### 80. What is the output?
 
 ```javascript
@@ -2578,45 +2379,6 @@ In ES6, we can overwrite this default `undefined` value with default parameters.
 `function sayHi(name = "Lydia") { ... }`
 
 In this case, if we didn't pass a value or if we passed `undefined`, `name` would always be equal to the string `Lydia`
-
-</p>
-</details>
-
----
-
-###### 82. What is the output?
-
-```javascript
-var status = '😎';
-
-setTimeout(() => {
-  const status = '😍';
-
-  const data = {
-    status: '🥑',
-    getStatus() {
-      return this.status;
-    },
-  };
-
-  console.log(data.getStatus());
-  console.log(data.getStatus.call(this));
-}, 0);
-```
-
-- A: `"🥑"` and `"😍"`
-- B: `"🥑"` and `"😎"`
-- C: `"😍"` and `"😎"`
-- D: `"😎"` and `"😎"`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: B
-
-The value of the `this` keyword is dependent on where you use it. In a **method**, like the `getStatus` method, the `this` keyword refers to _the object that the method belongs to_. The method belongs to the `data` object, so `this` refers to the `data` object. When we log `this.status`, the `status` property on the `data` object gets logged, which is `"🥑"`.
-
-With the `call` method, we can change the object to which the `this` keyword refers. In **functions**, the `this` keyword refers to the _the object that the function belongs to_. We declared the `setTimeout` function on the _global object_, so within the `setTimeout` function, the `this` keyword refers to the _global object_. On the global object, there is a variable called _status_ with the value of `"😎"`. When logging `this.status`, `"😎"` gets logged.
 
 </p>
 </details>
@@ -2718,37 +2480,6 @@ The value of `res` in the second `.then` is equal to the returned value of the p
 
 ---
 
-###### 86. Which option is a way to set `hasName` equal to `true`, provided you cannot pass `true` as an argument?
-
-```javascript
-function getName(name) {
-  const hasName = //
-}
-```
-
-- A: `!!name`
-- B: `name`
-- C: `new Boolean(name)`
-- D: `name.length`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: A
-
-With `!!name`, we determine whether the value of `name` is truthy or falsy. If the name is truthy, which we want to test for, `!name` returns `false`. `!false` (which is what `!!name` practically is) returns `true`.
-
-By setting `hasName` equal to `name`, you set `hasName` equal to whatever value you passed to the `getName` function, not the boolean value `true`.
-
-`new Boolean(true)` returns an object wrapper, not the boolean value itself.
-
-`name.length` returns the length of the passed argument, not whether it's `true`.
-
-</p>
-</details>
-
----
-
 ###### 87. What's the output?
 
 ```javascript
@@ -2797,38 +2528,6 @@ sum(10);
 You can set a default parameter's value equal to another parameter of the function, as long as they've been defined _before_ the default parameter. We pass the value `10` to the `sum` function. If the `sum` function only receives 1 argument, it means that the value for `num2` is not passed, and the value of `num1` is equal to the passed value `10` in this case. The default value of `num2` is the value of `num1`, which is `10`. `num1 + num2` returns `20`.
 
 If you're trying to set a default parameter's value equal to a parameter that is defined _after_ (to the right), the parameter's value hasn't been initialized yet, which will throw an error.
-
-</p>
-</details>
-
----
-
-###### 89. What's the output?
-
-```javascript
-// module.js
-export default () => 'Hello world';
-export const name = 'Lydia';
-
-// index.js
-import * as data from './module';
-
-console.log(data);
-```
-
-- A: `{ default: function default(), name: "Lydia" }`
-- B: `{ default: function default() }`
-- C: `{ default: "Hello world", name: "Lydia" }`
-- D: Global object of `module.js`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: A
-
-With the `import * as name` syntax, we import _all exports_ from the `module.js` file into the `index.js` file as a new object called `data` is created. In the `module.js` file, there are two exports: the default export, and a named export. The default export is a function that returns the string `"Hello World"`, and the named export is a variable called `name` which has the value of the string `"Lydia"`.
-
-The `data` object has a `default` property for the default export, other properties have the names of the named exports and their corresponding values.
 
 </p>
 </details>
@@ -3081,36 +2780,6 @@ We can set classes equal to other classes/function constructors. In this case, w
 
 ---
 
-###### 97. What's the output?
-
-```javascript
-const info = {
-  [Symbol('a')]: 'b',
-};
-
-console.log(info);
-console.log(Object.keys(info));
-```
-
-- A: `{Symbol('a'): 'b'}` and `["{Symbol('a')"]`
-- B: `{}` and `[]`
-- C: `{ a: "b" }` and `["a"]`
-- D: `{Symbol('a'): 'b'}` and `[]`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: D
-
-A Symbol is not _enumerable_. The Object.keys method returns all _enumerable_ key properties on an object. The Symbol won't be visible, and an empty array is returned. When logging the entire object, all properties will be visible, even non-enumerable ones.
-
-This is one of the many qualities of a symbol: besides representing an entirely unique value (which prevents accidental name collision on objects, for example when working with 2 libraries that want to add properties to the same object), you can also "hide" properties on objects this way (although not entirely. You can still access symbols using the `Object.getOwnPropertySymbols()` method).
-
-</p>
-</details>
-
----
-
 ###### 98. What's the output?
 
 ```javascript
@@ -3175,34 +2844,6 @@ TypeErrors get thrown when a value is not of the expected type. JavaScript expec
 
 SyntaxErrors get thrown when you've written something that isn't valid JavaScript, for example when you've written the word `return` as `retrun`.
 ReferenceErrors get thrown when JavaScript isn't able to find a reference to a value that you're trying to access.
-
-</p>
-</details>
-
----
-
-###### 100. What's the value of output?
-
-```javascript
-// 🎉✨ This is my 100th question! ✨🎉
-
-const output = `${[] && 'Im'}possible!
-You should${'' && `n't`} see a therapist after so much JavaScript lol`;
-```
-
-- A: `possible! You should see a therapist after so much JavaScript lol`
-- B: `Impossible! You should see a therapist after so much JavaScript lol`
-- C: `possible! You shouldn't see a therapist after so much JavaScript lol`
-- D: `Impossible! You shouldn't see a therapist after so much JavaScript lol`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: B
-
-`[]` is a truthy value. With the `&&` operator, the right-hand value will be returned if the left-hand value is a truthy value. In this case, the left-hand value `[]` is a truthy value, so `"Im'` gets returned.
-
-`""` is a falsy value. If the left-hand value is falsy, nothing gets returned. `n't` doesn't get returned.
 
 </p>
 </details>
@@ -3424,91 +3065,6 @@ JavaScript interprets (or unboxes) statements. When we use bracket notation, it 
 
 ---
 
-###### 107. What's its value?
-
-```javascript
-console.log('❤️' === '❤️');
-```
-
-- A: `true`
-- B: `false`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: A
-
-Under the hood, emojis are unicodes. The unicodes for the heart emoji is `"U+2764 U+FE0F"`. These are always the same for the same emojis, so we're comparing two equal strings to each other, which returns true.
-
-</p>
-</details>
-
----
-
-###### 108. Which of these methods modifies the original array?
-
-```javascript
-const emojis = ['✨', '🥑', '😍'];
-
-emojis.map(x => x + '✨');
-emojis.filter(x => x !== '🥑');
-emojis.find(x => x !== '🥑');
-emojis.reduce((acc, cur) => acc + '✨');
-emojis.slice(1, 2, '✨');
-emojis.splice(1, 2, '✨');
-```
-
-- A: `All of them`
-- B: `map` `reduce` `slice` `splice`
-- C: `map` `slice` `splice`
-- D: `splice`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: D
-
-With `splice` method, we modify the original array by deleting, replacing or adding elements. In this case, we removed 2 items from index 1 (we removed `'🥑'` and `'😍'`) and added the ✨ emoji instead.
-
-`map`, `filter` and `slice` return a new array, `find` returns an element, and `reduce` returns a reduced value.
-
-</p>
-</details>
-
----
-
-###### 109. What's the output?
-
-```javascript
-const food = ['🍕', '🍫', '🥑', '🍔'];
-const info = { favoriteFood: food[0] };
-
-info.favoriteFood = '🍝';
-
-console.log(food);
-```
-
-- A: `['🍕', '🍫', '🥑', '🍔']`
-- B: `['🍝', '🍫', '🥑', '🍔']`
-- C: `['🍝', '🍕', '🍫', '🥑', '🍔']`
-- D: `ReferenceError`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: A
-
-We set the value of the `favoriteFood` property on the `info` object equal to the string with the pizza emoji, `'🍕'`. A string is a primitive data type. In JavaScript, primitive data types don't interact by reference.
-
-In JavaScript, primitive data types (everything that's not an object) interact by _value_. In this case, we set the value of the `favoriteFood` property on the `info` object equal to the value of the first element in the `food` array, the string with the pizza emoji in this case (`'🍕'`). A string is a primitive data type, and interact by value (see my [blogpost](https://www.theavocoder.com/complete-javascript/2018/12/21/by-value-vs-by-reference) if you're interested in learning more)
-
-Then, we change the value of the `favoriteFood` property on the `info` object. The `food` array hasn't changed, since the value of `favoriteFood` was merely a _copy_ of the value of the first element in the array, and doesn't have a reference to the same spot in memory as the element on `food[0]`. When we log food, it's still the original array, `['🍕', '🍫', '🥑', '🍔']`.
-
-</p>
-</details>
-
----
-
 ###### 110. What does this method do?
 
 ```javascript
@@ -3584,80 +3140,6 @@ function getName() {
 
 getName(); // Lydia
 ```
-
-</p>
-</details>
-
----
-
-###### 112. What's the output?
-
-```javascript
-function* generatorOne() {
-  yield ['a', 'b', 'c'];
-}
-
-function* generatorTwo() {
-  yield* ['a', 'b', 'c'];
-}
-
-const one = generatorOne();
-const two = generatorTwo();
-
-console.log(one.next().value);
-console.log(two.next().value);
-```
-
-- A: `a` and `a`
-- B: `a` and `undefined`
-- C: `['a', 'b', 'c']` and `a`
-- D: `a` and `['a', 'b', 'c']`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: C
-
-With the `yield` keyword, we `yield` values in a generator function. With the `yield*` keyword, we can yield values from another generator function, or iterable object (for example an array).
-
-In `generatorOne`, we yield the entire array `['a', 'b', 'c']` using the `yield` keyword. The value of `value` property on the object returned by the `next` method on `one` (`one.next().value`) is equal to the entire array `['a', 'b', 'c']`.
-
-```javascript
-console.log(one.next().value); // ['a', 'b', 'c']
-console.log(one.next().value); // undefined
-```
-
-In `generatorTwo`, we use the `yield*` keyword. This means that the first yielded value of `two`, is equal to the first yielded value in the iterator. The iterator is the array `['a', 'b', 'c']`. The first yielded value is `a`, so the first time we call `two.next().value`, `a` is returned.
-
-```javascript
-console.log(two.next().value); // 'a'
-console.log(two.next().value); // 'b'
-console.log(two.next().value); // 'c'
-console.log(two.next().value); // undefined
-```
-
-</p>
-</details>
-
----
-
-###### 113. What's the output?
-
-```javascript
-console.log(`${(x => x)('I love')} to program`);
-```
-
-- A: `I love to program`
-- B: `undefined to program`
-- C: `${(x => x)('I love') to program`
-- D: `TypeError`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: A
-
-Expressions within template literals are evaluated first. This means that the string will contain the returned value of the expression, the immediately invoked function `(x => x)('I love')` in this case. We pass the value `'I love'` as an argument to the `x => x` arrow function. `x` is equal to `'I love'`, which gets returned. This results in `I love to program`.
 
 </p>
 </details>
@@ -3793,32 +3275,6 @@ function sumValues(x, y, z) {
 #### Answer: C
 
 With the spread operator `...`, we can _spread_ iterables to individual elements. The `sumValues` function receives three arguments: `x`, `y` and `z`. `...[1, 2, 3]` will result in `1, 2, 3`, which we pass to the `sumValues` function.
-
-</p>
-</details>
-
----
-
-###### 118. What's the output?
-
-```javascript
-let num = 1;
-const list = ['🥳', '🤠', '🥰', '🤪'];
-
-console.log(list[(num += 1)]);
-```
-
-- A: `🤠`
-- B: `🥰`
-- C: `SyntaxError`
-- D: `ReferenceError`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: B
-
-With the `+=` operator, we're incrementing the value of `num` by `1`. `num` had the initial value `1`, so `1 + 1` is `2`. The item on the second index in the `list` array is 🥰, `console.log(list[2])` prints 🥰.
 
 </p>
 </details>
@@ -3983,40 +3439,6 @@ The `add` function returns an arrow function, which returns an arrow function, w
 
 ---
 
-###### 124. What's the output?
-
-```javascript
-async function* range(start, end) {
-  for (let i = start; i <= end; i++) {
-    yield Promise.resolve(i);
-  }
-}
-
-(async () => {
-  const gen = range(1, 3);
-  for await (const item of gen) {
-    console.log(item);
-  }
-})();
-```
-
-- A: `Promise {1}` `Promise {2}` `Promise {3}`
-- B: `Promise {<pending>}` `Promise {<pending>}` `Promise {<pending>}`
-- C: `1` `2` `3`
-- D: `undefined` `undefined` `undefined`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: C
-
-The generator function `range` returns an async object with promises for each item in the range we pass: `Promise{1}`, `Promise{2}`, `Promise{3}`. We set the variable `gen` equal to the async object, after which we loop over it using a `for await ... of` loop. We set the variable `item` equal to the returned Promise values: first `Promise{1}`, then `Promise{2}`, then `Promise{3}`. Since we're _awaiting_ the value of `item`, the resolved promise, the resolved _values_ of the promises get returned: `1`, `2`, then `3`.
-
-</p>
-</details>
-
----
-
 ###### 125. What's the output?
 
 ```javascript
@@ -4038,69 +3460,6 @@ myFunc(1, 2, 3);
 #### Answer: D
 
 `myFunc` expects an object with properties `x`, `y` and `z` as its argument. Since we're only passing three separate numeric values (1, 2, 3) instead of one object with properties `x`, `y` and `z` ({x: 1, y: 2, z: 3}), `x`, `y` and `z` have their default value of `undefined`.
-
-</p>
-</details>
-
----
-
-###### 126. What's the output?
-
-```javascript
-function getFine(speed, amount) {
-  const formattedSpeed = new Intl.NumberFormat('en-US', {
-    style: 'unit',
-    unit: 'mile-per-hour'
-  }).format(speed);
-
-  const formattedAmount = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  }).format(amount);
-
-  return `The driver drove ${formattedSpeed} and has to pay ${formattedAmount}`;
-}
-
-console.log(getFine(130, 300))
-```
-
-- A: The driver drove 130 and has to pay 300
-- B: The driver drove 130 mph and has to pay \$300.00
-- C: The driver drove undefined and has to pay undefined
-- D: The driver drove 130.00 and has to pay 300.00
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: B
-
-With the `Intl.NumberFormat` method, we can format numeric values to any locale. We format the numeric value `130` to the `en-US` locale as a `unit` in `mile-per-hour`, which results in `130 mph`. The numeric value `300` to the `en-US` locale as a `currency` in `USD` results in `$300.00`.
-
-</p>
-</details>
-
----
-
-###### 127. What's the output?
-
-```javascript
-const spookyItems = ['👻', '🎃', '🕸'];
-({ item: spookyItems[3] } = { item: '💀' });
-
-console.log(spookyItems);
-```
-
-- A: `["👻", "🎃", "🕸"]`
-- B: `["👻", "🎃", "🕸", "💀"]`
-- C: `["👻", "🎃", "🕸", { item: "💀" }]`
-- D: `["👻", "🎃", "🕸", "[object Object]"]`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: B
-
-By destructuring objects, we can unpack values from the right-hand object, and assign the unpacked value to the value of the same property name on the left-hand object. In this case, we're assigning the value "💀" to `spookyItems[3]`. This means that we're modifying the `spookyItems` array, we're adding the "💀" to it. When logging `spookyItems`, `["👻", "🎃", "🕸", "💀"]` gets logged.
 
 </p>
 </details>
@@ -4202,31 +3561,6 @@ In the `try` block, we're logging the awaited value of the `myPromise` variable:
 
 ---
 
-###### 131. What's the output?
-
-```javascript
-const emojis = ['🥑', ['✨', '✨', ['🍕', '🍕']]];
-
-console.log(emojis.flat(1));
-```
-
-- A: `['🥑', ['✨', '✨', ['🍕', '🍕']]]`
-- B: `['🥑', '✨', '✨', ['🍕', '🍕']]`
-- C: `['🥑', ['✨', '✨', '🍕', '🍕']]`
-- D: `['🥑', '✨', '✨', '🍕', '🍕']`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: B
-
-With the `flat` method, we can create a new, flattened array. The depth of the flattened array depends on the value that we pass. In this case, we passed the value `1` (which we didn't have to, that's the default value), meaning that only the arrays on the first depth will be concatenated. `['🥑']` and `['✨', '✨', ['🍕', '🍕']]` in this case. Concatenating these two arrays results in `['🥑', '✨', '✨', ['🍕', '🍕']]`.
-
-</p>
-</details>
-
----
-
 ###### 132. What's the output?
 
 ```javascript
@@ -4320,64 +3654,6 @@ In `funcTwo`, the variable `res` gets `Promise` because `Promise.resolve(Promise
 Then the call stack is empty. Promises are _microtasks_ so they are resolved first when the call stack is empty so `Promise 1!` gets to be logged.
 
 Now, since `funcTwo` popped off the call stack, the call stack is empty. The callbacks waiting in the queue (`() => console.log("Timeout 1!")` from `funcOne`, and `() => console.log("Timeout 2!")` from `funcTwo`) get added to the call stack one by one. The first callback logs `Timeout 1!`, and gets popped off the stack. Then, the second callback logs `Timeout 2!`, and gets popped off the stack.
-
-</p>
-</details>
-
----
-
-###### 134. How can we invoke `sum` in `sum.js` from `index.js?`
-
-```javascript
-// sum.js
-export default function sum(x) {
-  return x + x;
-}
-
-// index.js
-import * as sum from './sum';
-```
-
-- A: `sum(4)`
-- B: `sum.sum(4)`
-- C: `sum.default(4)`
-- D: Default aren't imported with `*`, only named exports
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: C
-
-With the asterisk `*`, we import all exported values from that file, both default and named. If we had the following file:
-
-```javascript
-// info.js
-export const name = 'Lydia';
-export const age = 21;
-export default 'I love JavaScript';
-
-// index.js
-import * as info from './info';
-console.log(info);
-```
-
-The following would get logged:
-
-```javascript
-{
-  default: "I love JavaScript",
-  name: "Lydia",
-  age: 21
-}
-```
-
-For the `sum` example, it means that the imported value `sum` looks like this:
-
-```javascript
-{ default: function sum(x) { return x + x } }
-```
-
-We can invoke this function, by calling `sum.default`
 
 </p>
 </details>
@@ -4550,50 +3826,6 @@ In ES2020, we can add private variables in classes by using the `#`. We cannot a
 
 ---
 
-###### 140. What's missing?
-
-```javascript
-const teams = [
-  { name: 'Team 1', members: ['Paul', 'Lisa'] },
-  { name: 'Team 2', members: ['Laura', 'Tim'] },
-];
-
-function* getMembers(members) {
-  for (let i = 0; i < members.length; i++) {
-    yield members[i];
-  }
-}
-
-function* getTeams(teams) {
-  for (let i = 0; i < teams.length; i++) {
-    // ✨ SOMETHING IS MISSING HERE ✨
-  }
-}
-
-const obj = getTeams(teams);
-obj.next(); // { value: "Paul", done: false }
-obj.next(); // { value: "Lisa", done: false }
-```
-
-- A: `yield getMembers(teams[i].members)`
-- B: `yield* getMembers(teams[i].members)`
-- C: `return getMembers(teams[i].members)`
-- D: `return yield getMembers(teams[i].members)`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: B
-
-In order to iterate over the `members` in each element in the `teams` array, we need to pass `teams[i].members` to the `getMembers` generator function. The generator function returns a generator object. In order to iterate over each element in this generator object, we need to use `yield*`.
-
-If we would've written `yield`, `return yield`, or `return`, the entire generator function would've gotten returned the first time we called the `next` method.
-
-</p>
-</details>
-
----
-
 ###### 141. What's the output?
 
 ```javascript
@@ -4675,34 +3907,6 @@ We create the variable `pet` which is an instance of the `Flamingo` class. When 
 
 ---
 
-###### 143. Which of the options result(s) in an error?
-
-```javascript
-const emojis = ['🎄', '🎅🏼', '🎁', '⭐'];
-
-/* 1 */ emojis.push('🦌');
-/* 2 */ emojis.splice(0, 2);
-/* 3 */ emojis = [...emojis, '🥂'];
-/* 4 */ emojis.length = 0;
-```
-
-- A: 1
-- B: 1 and 2
-- C: 3 and 4
-- D: 3
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: D
-
-The `const` keyword simply means we cannot _redeclare_ the value of that variable, it's _read-only_. However, the value itself isn't immutable. The properties on the `emojis` array can be modified, for example by pushing new values, splicing them, or setting the length of the array to 0.
-
-</p>
-</details>
-
----
-
 ###### 144. What do we need to add to the `person` object to get `["Lydia Hallie", 21]` as the output of `[...person]`?
 
 ```javascript
@@ -4755,41 +3959,6 @@ console.log(count)
 #### Answer: C
 
 The `if` condition within the `forEach` loop checks whether the value of `num` is truthy or falsy. Since the first number in the `nums` array is `0`, a falsy value, the `if` statement's code block won't be executed. `count` only gets incremented for the other 3 numbers in the `nums` array, `1`, `2` and `3`. Since `count` gets incremented by `1` 3 times, the value of `count` is `3`.
-
-</p>
-</details>
-
----
-
-###### 146. What's the output?
-
-```javascript
-function getFruit(fruits) {
-	console.log(fruits?.[1]?.[1])
-}
-
-getFruit([['🍊', '🍌'], ['🍍']])
-getFruit()
-getFruit([['🍍'], ['🍊', '🍌']])
-```
-
-- A: `null`, `undefined`, 🍌
-- B: `[]`, `null`, 🍌
-- C: `[]`, `[]`, 🍌
-- D: `undefined`, `undefined`, 🍌
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: D
-
-The `?` allows us to optionally access deeper nested properties within objects. We're trying to log the item on index `1` within the subarray that's on index `1` of the `fruits` array. If the subarray on index `1` in the `fruits` array doesn't exist, it'll simply return `undefined`. If the subarray on index `1` in the `fruits` array exists, but this subarray doesn't have an item on its `1` index, it'll also return `undefined`. 
-
-First, we're trying to log the second item in the `['🍍']` subarray of `[['🍊', '🍌'], ['🍍']]`. This subarray only contains one item, which means there is no item on index `1`, and returns `undefined`.
-
-Then, we're invoking the `getFruits` function without passing a value as an argument, which means that `fruits` has a value of `undefined` by default. Since we're conditionally chaining the item on index `1` of`fruits`, it returns `undefined` since this item on index `1` does not exist. 
-
-Lastly, we're trying to log the second item in the `['🍊', '🍌']` subarray of `['🍍'], ['🍊', '🍌']`. The item on index `1` within this subarray is `🍌`, which gets logged.
 
 </p>
 </details>
@@ -4868,73 +4037,6 @@ console.log(updatedUser === user)
 #### Answer: B
 
 The `updateUser` function updates the values of the `email` and `password` properties on user, if their values are passed to the function, after which the function returns the `user` object. The returned value of the `updateUser` function is the `user` object, which means that the value of updatedUser is a reference to the same `user` object that `user` points to. `updatedUser === user` equals `true`.
-
-</p>
-</details>
-
----
-
-###### 149. What's the output?
-
-```javascript
-const fruit = ['🍌', '🍊', '🍎']
-
-fruit.slice(0, 1)
-fruit.splice(0, 1)
-fruit.unshift('🍇')
-
-console.log(fruit)
-```
-
-- A: `['🍌', '🍊', '🍎']`
-- B: `['🍊', '🍎']`
-- C: `['🍇', '🍊', '🍎']`
-- D: `['🍇', '🍌', '🍊', '🍎']`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: C
-
-First, we invoke the `slice` method on the fruit array. The slice method does not modify the original array, but returns the value that it sliced off the array: the banana emoji.
-Then, we invoke the `splice` method on the fruit array. The splice method does modify the original array, which means that the fruit array now consists of `['🍊', '🍎']`.
-At last, we invoke the `unshift` method on the `fruit` array, which modifies the original array by adding the provided value, ‘🍇’ in this case,  as the first element in the array.  The fruit array now consists of `['🍇', '🍊', '🍎']`.
-
-</p>
-</details>
-
----
-
-###### 150. What's the output?
-
-```javascript
-const animals = {};
-let dog = { emoji: '🐶' }
-let cat = { emoji: '🐈' }
-
-animals[dog] = { ...dog, name: "Mara" }
-animals[cat] = { ...cat, name: "Sara" }
-
-console.log(animals[dog])
-```
-
-- A: `{ emoji: "🐶", name: "Mara" }`
-- B: `{ emoji: "🐈", name: "Sara" }`
-- C: `undefined`
-- D: `ReferenceError`
-
-<details><summary><b>Answer</b></summary>
-<p>
-
-#### Answer: B
-
-Object keys are converted to strings. 
-
-Since the value of  `dog` is an object,  `animals[dog]` actually means that we’re creating a new property called `"[object Object]"` equal to the new object. `animals["[object Object]"]` is now equal to `{ emoji: "🐶", name: "Mara"}`.
-
-`cat` is also an object, which means that `animals[cat]` actually means that we’re overwriting the value of  `animals["[object Object]"]` with the new cat properties. 
-
-Logging `animals[dog]`, or actually `animals["[object Object]"]` since converting the `dog` object to a string results `"[object Object]"`, returns the `{ emoji: "🐈", name: "Sara" }`.
 
 </p>
 </details>
