@@ -26,3 +26,6 @@ class ErrorBoundary extends React.Component {
 <ErrorBoundary>
   <App />
 </ErrorBoundary>
+
+An Error Boundary is a specialized React component that catches JavaScript errors anywhere in its child component tree, logs those errors, 
+and displays a fallback UI instead of letting the entire application crash.
