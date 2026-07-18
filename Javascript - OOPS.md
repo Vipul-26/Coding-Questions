@@ -138,7 +138,7 @@ this === user
 
 # Encapsulation
 
-Keeping data and methods together.
+Encapsulation means keeping related data and methods together inside a class and controlling access to the data.
 
 ```javascript
 class BankAccount {
