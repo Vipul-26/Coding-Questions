@@ -404,6 +404,64 @@ JavaScript searches upward until it finds the property.
 
 ---
 
+# Class vs Object
+
+| Class | Object |
+|--------|--------|
+| A blueprint or template for creating objects. | An actual instance created from a class. |
+| Defines properties and methods. | Holds real values and can use the methods. |
+| Created using the `class` keyword. | Created using the `new` keyword (or object literals). |
+| Does not occupy memory for instance data until objects are created. | Occupies memory when instantiated. |
+| One class can create many objects. | Each object has its own state (property values). |
+
+### Example
+
+```javascript
+class Car {
+  constructor(brand, model) {
+    this.brand = brand;
+    this.model = model;
+  }
+
+  start() {
+    console.log(`${this.brand} ${this.model} started`);
+  }
+}
+
+const car1 = new Car("Toyota", "Fortuner");
+const car2 = new Car("Honda", "City");
+
+car1.start(); // Toyota Fortuner started
+car2.start(); // Honda City started
+```
+
+### Interview Explanation
+
+- **Class** = Blueprint
+- **Object** = Real thing created from that blueprint
+
+Real-world analogy:
+
+```
+House Blueprint (Class)
+          ↓
+     Build House #1 (Object)
+
+          ↓
+     Build House #2 (Object)
+
+          ↓
+     Build House #3 (Object)
+```
+
+One blueprint can be used to build many houses, and each house can have different colors, owners, or furniture while sharing the same design.
+
+### Interview One-Liner
+
+> **A class is a blueprint that defines the structure and behavior of objects, whereas an object is a real instance of that class containing actual data.**
+
+---
+
 # Class vs Constructor Function
 
 | Constructor Function | ES6 Class |
