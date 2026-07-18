@@ -1,34 +1,116 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 
 export default function App() {
   const [dataFromAPI, setDataFromAPI] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchedInput, setSearchedInput] = useState('');
-  const [showList, setShowList] = useState(true);
+  const [showList, setShowList] = useState(false);
   const [dobouncedSearch, setDebouncedSearch] = useState('');
+  const inputRef = useRef(null);
 
   const mockData = [
-    {
-      id: 1,
-      title: 'Apple',
-    },
-    {
-      id: 2,
-      title: 'Banana',
-    },
-    {
-      id: 3,
-      title: 'Orange',
-    },
-    {
-      id: 4,
-      title: 'Kiwi',
-    },
-    {
-      id: 5,
-      title: 'Guava',
-    },
+    { id: 1, title: 'Apple' },
+    { id: 2, title: 'Banana' },
+    { id: 3, title: 'Orange' },
+    { id: 4, title: 'Kiwi' },
+    { id: 5, title: 'Guava' },
+    { id: 6, title: 'Strawberry' },
+    { id: 7, title: 'Blueberry' },
+    { id: 8, title: 'Raspberry' },
+    { id: 9, title: 'Blackberry' },
+    { id: 10, title: 'Watermelon' },
+    { id: 11, title: 'Cantaloupe' },
+    { id: 12, title: 'Honeydew Melon' },
+    { id: 13, title: 'Pineapple' },
+    { id: 14, title: 'Mango' },
+    { id: 15, title: 'Papaya' },
+    { id: 16, title: 'Peach' },
+    { id: 17, title: 'Plum' },
+    { id: 18, title: 'Apricot' },
+    { id: 19, title: 'Cherry' },
+    { id: 20, title: 'Grape' },
+    { id: 21, title: 'Pomegranate' },
+    { id: 22, title: 'Dragonfruit' },
+    { id: 23, title: 'Passionfruit' },
+    { id: 24, title: 'Lychee' },
+    { id: 25, title: 'Rambutan' },
+    { id: 26, title: 'Durian' },
+    { id: 27, title: 'Jackfruit' },
+    { id: 28, title: 'Starfruit' },
+    { id: 29, title: 'Persimmon' },
+    { id: 30, title: 'Fig' },
+    { id: 31, title: 'Date' },
+    { id: 32, title: 'Coconut' },
+    { id: 33, title: 'Avocado' },
+    { id: 34, title: 'Lemon' },
+    { id: 35, title: 'Lime' },
+    { id: 36, title: 'Grapefruit' },
+    { id: 37, title: 'Tangerine' },
+    { id: 38, title: 'Clementine' },
+    { id: 39, title: 'Kumquat' },
+    { id: 40, title: 'Cranberry' },
+    { id: 41, title: 'Gooseberry' },
+    { id: 42, title: 'Mulberry' },
+    { id: 43, title: 'Elderberry' },
+    { id: 44, title: 'Boysenberry' },
+    { id: 45, title: 'Huckleberry' },
+    { id: 46, title: 'Marionberry' },
+    { id: 47, title: 'Currant' },
+    { id: 48, title: 'Goji Berry' },
+    { id: 49, title: 'Acai Berry' },
+    { id: 50, title: 'Miracle Fruit' },
+    { id: 51, title: 'Soursop' },
+    { id: 52, title: 'Custard Apple' },
+    { id: 53, title: 'Cherimoya' },
+    { id: 54, title: 'Longan' },
+    { id: 55, title: 'Mangosteen' },
+    { id: 56, title: 'Langsat' },
+    { id: 57, title: 'Salak' },
+    { id: 58, title: 'Sapodilla' },
+    { id: 59, title: 'Feijoa' },
+    { id: 60, title: 'Tamarind' },
+    { id: 61, title: 'Jujube' },
+    { id: 62, title: 'Quince' },
+    { id: 63, title: 'Medlar' },
+    { id: 64, title: 'Loquat' },
+    { id: 65, title: 'Kumquat' },
+    { id: 66, title: 'Ugli Fruit' },
+    { id: 67, title: 'Blood Orange' },
+    { id: 68, title: 'Pomelo' },
+    { id: 69, title: 'Key Lime' },
+    { id: 70, title: 'Meyer Lemon' },
+    { id: 71, title: 'Calamansi' },
+    { id: 72, title: 'Yuzu' },
+    { id: 73, title: 'Finger Lime' },
+    { id: 74, title: 'Buddha\'s Hand' },
+    { id: 75, title: 'Citron' },
+    { id: 76, title: 'Nectarine' },
+    { id: 77, title: 'Greengage' },
+    { id: 78, title: 'Damson' },
+    { id: 79, title: 'Sloe' },
+    { id: 80, title: 'Cloudberry' },
+    { id: 81, title: 'Lingonberry' },
+    { id: 82, title: 'Dewberry' },
+    { id: 83, title: 'Salmonberry' },
+    { id: 84, title: 'Thimbleberry' },
+    { id: 85, title: 'Wineberry' },
+    { id: 86, title: 'Bearberry' },
+    { id: 87, title: 'Bilberry' },
+    { id: 88, title: 'Chokeberry' },
+    { id: 89, title: 'Elderberry' },
+    { id: 90, title: 'Rowanberry' },
+    { id: 91, title: 'Sea Buckthorn' },
+    { id: 92, title: 'Prickly Pear' },
+    { id: 93, title: 'Chayote' },
+    { id: 94, title: 'Breadfruit' },
+    { id: 95, title: 'Carambola' },
+    { id: 96, title: 'Plantain' },
+    { id: 97, title: 'Saskatoon Berry' },
+    { id: 98, title: 'Buffalo Berry' },
+    { id: 99, title: 'Cape Gooseberry' },
+    { id: 100, title: 'Jabuticaba' }
   ];
+  
 
   const fetchSuggestions = () => {
     const newPromise = new Promise((resolve, reject) => {
@@ -64,6 +146,29 @@ export default function App() {
     });
   }, [dataFromAPI, dobouncedSearch]);
 
+  const handleChange = (e) => {
+    setSearchedInput(e.target.value);
+    if(e.target.value != '') {
+      setShowList(true);
+    } else {
+      setShowList(false);
+    }
+  }
+
+  const handleInputFocus = () => {    
+    setShowList(true);
+    if(inputRef.current) {
+      inputRef.current.style.borderColor = 'red';
+    }
+  };
+
+  const handleInputBlur = () => {
+    setTimeout(() => {
+      setShowList(false);
+    }, 150);  
+    inputRef.current.style.borderColor = '#dddddd';
+  };
+
   if (loading) {
     return <h1>Loading...</h1>;
   }
@@ -71,28 +176,36 @@ export default function App() {
   return (
     <div>
       <input
+        ref={inputRef}
         type="text"
         value={searchedInput}
-        onChange={(e) => {
-          setSearchedInput(e.target.value);
-          setShowList(true);
-        }}
+        placeholder="Type to search..."
+        onChange={(e) => handleChange(e)}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        style={{ border: '2px solid #ccc', outline: 'none', width: '300px' }}
       />
       {showList &&
-        filteredSeachedData?.map((data) => {
-          return (
-           <div key={data.id}>
-              <p
-              onClick={() => {
-                setSearchedInput(data.title);
-                setShowList(false);
-              }}
-            >
-              {data.title}
-            </p>
-            </div>
-          );
-        })}
+        <div 
+          style={{ border: '2px solid #ccc', height: '300px', width: '304px', overflowY: 'scroll' }}
+        >
+          {filteredSeachedData?.map((data) => {
+            return (
+            <div key={data.id}>
+                <p
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    setSearchedInput(data.title);
+                    setShowList(false);
+                  }}
+                >
+                  {data.title}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      }
     </div>
   );
 }
