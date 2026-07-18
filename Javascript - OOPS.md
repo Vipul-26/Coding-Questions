@@ -1,36 +1,36 @@
 # Table of Contents
 
-1. What is OOP?
-2. Four Pillars of OOP
-3. Class vs Object
-4. Object Literal
-5. Constructor Function
-6. ES6 Class
-7. `this` Keyword
-8. Encapsulation
-9. Private Fields (`#`)
-10. Abstraction
-11. Inheritance
-12. `super()`
-13. Polymorphism
-14. Method Overriding
-15. Static Methods
-16. Getters & Setters
-17. Prototype
-18. Prototype Chain
-19. Class vs Constructor Function
-20. `Object.create()`
-21. `instanceof`
-22. `hasOwnProperty()`
-23. `Object.keys()`
-24. `Object.values()`
-25. `Object.entries()`
-26. `Object.freeze()`
-27. `Object.seal()`
-28. Composition vs Inheritance
-29. Frequently Asked Interview Questions
-30. Common Interview One-Liners
-31. 30-Second Revision Summary
+- [What is OOP?](#what-is-oop)
+- [Four Pillars of OOP](#four-pillars)
+- [Class vs Object](#class-vs-object)
+- [Object Literal](#object-literal)
+- [Constructor Function](#constructor-function-old-way)
+- [ES6 Class](#es6-class)
+- [`this` Keyword](#this-keyword)
+- [Encapsulation](#encapsulation)
+- [Private Fields (`#`)](#private-fields-real-encapsulation)
+- [Abstraction](#abstraction)
+- [Inheritance](#inheritance)
+- [`super()`](#super)
+- [Polymorphism](#polymorphism)
+- [Method Overriding](#method-overriding)
+- [Static Methods](#static-methods)
+- [Getter & Setter](#getter--setter)
+- [Prototype](#prototype)
+- [Prototype Chain](#prototype-chain)
+- [Class vs Constructor Function](#class-vs-constructor-function)
+- [`Object.create()`](#objectcreate)
+- [`instanceof`](#instanceof)
+- [`hasOwnProperty()`](#hasownproperty)
+- [`Object.keys()`](#objectkeys)
+- [`Object.values()`](#objectvalues)
+- [`Object.entries()`](#objectentries)
+- [`Object.freeze()`](#objectfreeze)
+- [`Object.seal()`](#objectseal)
+- [Composition vs Inheritance](#composition-vs-inheritance)
+- [Interview Questions](#interview-questions)
+- [Common Interview One-Liners](#common-interview-one-liners)
+- [30-Second Summary](#30-second-summary)
 
 # What is OOP?
 
