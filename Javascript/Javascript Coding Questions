@@ -442,3 +442,71 @@ function square(x) {
 const memoizedValue = memoize(square);
 console.log(memoizedValue(5));
 console.log(memoizedValue(5));
+
+// Polyfill for map
+
+Array.prototype.map = function (callback) {
+  const result = [];
+  for (let i = 0; i < this.length; i++) {
+    result.push(callback(this[i], i, this));
+  }
+  return result;
+};
+
+// Polyfill for filter
+
+Array.prototype.filter = function (callback) {
+  const result = [];
+  for (let i = 0; i < this.length; i++) {
+    if (callback(this[i], i, this)) {
+      result.push(this[i]);
+    }
+  }
+  return result;
+};
+
+// Polyfill for reduce
+
+Array.prototype.reduce = function (callback, initialValue) {
+  let accumulator = initialValue;
+  let startIndex = 0;
+  if (accumulator === undefined) {
+    accumulator = this[0];
+    startIndex = 1;
+  }
+  for (let i = startIndex; i < this.length; i++) {
+    accumulator = callback(accumulator, this[i], i, this);
+  }
+  return accumulator;
+};
+
+// Polyfill for call
+
+Function.prototype.call = function (context, ...args) {
+    context = context || globalThis;
+    const fn = Symbol();
+    context[fn] = this;
+    const result = context[fn](...args);
+    delete context[fn];
+    return result;
+};
+
+// Polyfill for apply
+
+Function.prototype.apply = function (context, args = []) {
+    context = context || globalThis;
+    const fn = Symbol();
+    context[fn] = this;
+    const result = context[fn](...args);
+    delete context[fn];
+    return result;
+};
+
+// Polyfill for bind
+
+Function.prototype.bind = function (context, ...args1) {
+    const fn = this;
+    return function (...args2) {
+        return fn.apply(context, [...args1, ...args2]);
+    };
+};
