@@ -185,20 +185,16 @@ function customHook(obj1, obj2) {
 
 // Flatten Array ([1,[2,[3,[4]]]])
 
-function customHook(inputArray) {
-  function flattenArray(inputArray) {
-    let flattenedArray = [];
-    for (let i of inputArray) {
-      if (Array.isArray(i)) {
-        flattenedArray.push(...flattenArray(i));
-      } else {
-        flattenedArray.push(i);
-      }
+function flattenArray(inputArray) {
+  let flattenedArray = [];
+  for (let i of inputArray) {
+    if (Array.isArray(i)) {
+      flattenedArray.push(...flattenArray(i));
+    } else {
+      flattenedArray.push(i);
     }
-    return flattenedArray;
   }
-
-  return flattenArray(inputArray);
+  return flattenedArray;
 }
 
 // Reverse Words ('I love react')
@@ -382,7 +378,7 @@ var twoSum = function (nums, target) {
         clearTimeout(timer);
         timer = setTimeout(() => {
           fn(...args);
-        }, delay);Ï
+        }, delay);
       }
     }
     const search = (value) => {
