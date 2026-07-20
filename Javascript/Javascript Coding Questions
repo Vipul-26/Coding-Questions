@@ -4,6 +4,8 @@
 
 // Set works on Array & Strings and it has as .has() built-in method which return true or false
 
+// Map is used to store dynamic key value pairs of any type.
+
 // Characters occurs most ('gh ghg dghd ghd ghg jhg djgh ygrytrh jrnret')
 
 function customHook(str) {
