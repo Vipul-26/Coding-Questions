@@ -235,24 +235,6 @@ const reverseVowels = (str) => {
 
 console.log(reverseVowels(myInput));
 
-
-
-
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
- 
-
-
 // Reverse words + strings without using reverse
 
 const myStr = 'Hello World'; // olleH dlroW
