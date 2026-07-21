@@ -4,6 +4,45 @@ A collection of common JavaScript logic, string/array/object problems, higher-or
 
 ---
 
+## Table of Contents
+
+- [Quick Concepts](#quick-concepts)
+- [Characters occurs most](#characters-occurs-most)
+- [Words occurs most](#words-occurs-most)
+- [First Non-Repeating Character](#first-non-repeating-character)
+- [Remove Duplicate Words](#remove-duplicate-words)
+- [Find Duplicate Words](#find-duplicate-words)
+- [Intersection](#intersection)
+- [Difference](#difference)
+- [Group By Property](#group-by-property)
+- [Highest Salary Employee](#highest-salary-employee)
+- [Sum of Salary](#sum-of-salary)
+- [Merge Objects](#merge-objects)
+- [Flatten Array](#flatten-array)
+- [Reverse Words](#reverse-words)
+- [Reverse Vowels](#reverse-vowels)
+- [Reverse words + strings without using reverse](#reverse-words--strings-without-using-reverse)
+- [Longest word](#longest-word)
+- [Sort By Age](#sort-by-age)
+- [Deep Copy](#deep-copy)
+- [Deep Freeze](#deep-freeze)
+- [Deep Equal](#deep-equal)
+- [Flatten Object](#flatten-object)
+- [Implement get](#implement-get)
+- [Implement set](#implement-set)
+- [Two Sum](#two-sum)
+- [Debouncing Input Field](#debouncing-input-field)
+- [Throttling Window Scroll](#throttling-window-scroll)
+- [Memoize](#memoize)
+- [Polyfill for map](#polyfill-for-map)
+- [Polyfill for filter](#polyfill-for-filter)
+- [Polyfill for reduce](#polyfill-for-reduce)
+- [Polyfill for call](#polyfill-for-call)
+- [Polyfill for apply](#polyfill-for-apply)
+- [Polyfill for bind](#polyfill-for-bind)
+
+---
+
 ## Quick Concepts
 
 - String to Array `.split(' ')` vs Array to String `.join(' ')`
