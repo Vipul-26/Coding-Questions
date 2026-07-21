@@ -99,12 +99,6 @@ Use Polyfill
 
 ---
 
-## Interview One-Liner
-
-> **A polyfill is a fallback JavaScript implementation that provides modern features in environments where they are not natively supported.**
-
----
-
 # Prototype
 
 ## Definition
@@ -114,12 +108,6 @@ Use Polyfill
 OR
 
 > **Prototype is JavaScript's built-in inheritance mechanism that allows objects to inherit properties and methods from other objects.**
-
----
-
-## Simple Definition
-
-> **Every JavaScript object has a prototype from which it inherits properties and methods.**
 
 ---
 
@@ -174,12 +162,6 @@ If JavaScript cannot find a property or method on an object, it searches up the 
 - Enables inheritance
 
 Instead of creating a new copy of a method for every object, all objects share a single method stored on the prototype.
-
----
-
-## Interview One-Liner
-
-> **A prototype is an object that enables inheritance by allowing other objects to share its properties and methods through the prototype chain.**
 
 ---
 
