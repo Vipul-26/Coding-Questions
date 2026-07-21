@@ -1,5 +1,12 @@
-HTML:
+# Product Search & Category Filter
 
+A vanilla JavaScript feature that lets users search products via an API and filter the results by category (smartphones / mobile-accessories), with an empty state and a "no products found" message.
+
+---
+
+## HTML
+
+```html
 <input id="search" type="text" placeholder="Search your product">
 <select name="category" id="selectCategory">
   <option value="default">Default</option>
@@ -7,9 +14,13 @@ HTML:
   <option value="mobile-accessories">Mobile Accessories</option>
 <select>
 <div id="products-container"></div>
+```
 
-CSS:
+---
 
+## CSS
+
+```css
 html, body {
   height: 100%;
   width: 100%;
@@ -36,10 +47,13 @@ html, body {
   border: 1px solid red;
   width: 200px;
 }
+```
 
+---
 
-JS:
+## JavaScript
 
+```javascript
 /*
 A large e-commerce site is looking to expand into mobile phone sales. They want to add the ability to search for both phones and accessories using product search and filter features.
 
@@ -133,3 +147,4 @@ selectCategory.addEventListener('change', (e) => {
     renderUI(products);
   }
 });
+```
