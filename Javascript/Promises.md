@@ -1,5 +1,9 @@
 # JavaScript Promises Cheat Sheet (Interview Revision)
 
+> Senior Frontend Interview Quick Reference
+
+---
+
 # Table of Contents
 
 - [What is a Promise?](#what-is-a-promise)
@@ -16,9 +20,12 @@
 - [Promise.allSettled()](#promiseallsettled)
 - [Promise.race()](#promiserace)
 - [Promise.any()](#promiseany)
+- [Combinators — Comparison Table](#combinators--comparison-table)
 - [Promise vs Callback](#promise-vs-callback)
 - [Promise vs async/await](#promise-vs-asyncawait)
+- [Interview Questions](#interview-questions)
 - [Common Interview One-Liners](#common-interview-one-liners)
+- [30-Second Summary](#30-second-summary)
 
 ---
 
@@ -96,7 +103,59 @@ callback(
 
 This is called **Callback Hell**.
 
+Concrete example — deeply nested `setTimeout` callbacks:
+
+```javascript
+setTimeout(() => {
+  console.log("1 - work is done");
+  setTimeout(() => {
+    console.log("2 - work is done");
+    setTimeout(() => {
+      console.log("3 - work is done");
+      setTimeout(() => {
+        console.log("4 - work is done");
+      }, 1000);
+    }, 1000);
+  }, 1000);
+}, 1000);
+```
+
 Promises solve this using chaining.
+
+### Callback vs Promise — same task
+
+Using **callbacks** (caller must pass a continuation):
+
+```javascript
+function enrollStudent(student, callback) {
+  setTimeout(function () {
+    students.push(student);
+    console.log("Student has been enrolled");
+    callback();
+  }, 1000);
+}
+
+enrollStudent(newStudent, getStudents);
+```
+
+Using **Promises** (returns a Promise, chain with `.then`):
+
+```javascript
+function enrollStudent(student) {
+  return new Promise(function (resolve, reject) {
+    setTimeout(function () {
+      students.push(student);
+      console.log("Student has been enrolled");
+      const error = false;
+      error ? reject() : resolve();
+    }, 1000);
+  });
+}
+
+enrollStudent(newStudent)
+  .then(getStudents)
+  .catch(() => console.log("Some error occured"));
+```
 
 ---
 
@@ -294,6 +353,57 @@ Fails only when **all fail**.
 
 ---
 
+# Combinators — Comparison Table
+
+| Feature | `Promise.all` | `Promise.allSettled` | `Promise.race` | `Promise.any` |
+|---|---|---|---|---|
+| **Resolves when** | **All** resolve | **All** settle (resolve or reject) | **First** settles (resolve or reject) | **First** resolves |
+| **Rejects when** | **Any one** rejects | **Never** rejects | **First** settled is a rejection | **All** reject |
+| **Result value** | Array of resolved values | Array of `{status, value/reason}` | Value/reason of first settled | Value of first resolved |
+| **Error type** | First rejection reason | N/A | First rejection reason | `AggregateError` (all reasons) |
+| **Short-circuits?** | Yes, on first rejection | No, waits for all | Yes, on first settlement | Yes, on first fulfillment |
+| **Use case** | All results needed, fail fast | Outcome of every promise | Timeout races, fastest response | First success from many sources |
+
+### Runnable examples with output
+
+```javascript
+// Promise.all — fail-fast
+Promise.all([Promise.resolve(1), Promise.resolve(2), Promise.resolve(3)])
+  .then((values) => console.log(values)); // [1, 2, 3]
+
+Promise.all([Promise.resolve(1), Promise.reject("Error!")])
+  .catch((err) => console.log(err));      // "Error!"
+
+// Promise.allSettled — never rejects
+Promise.allSettled([Promise.resolve("Success"), Promise.reject("Failed")])
+  .then((r) => console.log(r));
+// [ { status: "fulfilled", value: "Success" },
+//   { status: "rejected",  reason: "Failed" } ]
+
+// Promise.race — first to settle (even if rejection)
+const slow = new Promise((res) => setTimeout(() => res("Slow"), 3000));
+const fast = new Promise((res) => setTimeout(() => res("Fast"), 1000));
+Promise.race([slow, fast]).then((v) => console.log(v)); // "Fast"
+
+// Promise.any — first to resolve; AggregateError if all reject
+Promise.any([Promise.reject("Err 1"), Promise.reject("Err 2")])
+  .catch((err) => {
+    console.log(err);        // AggregateError: All promises were rejected
+    console.log(err.errors); // ["Err 1", "Err 2"]
+  });
+```
+
+### Visual Summary
+
+```
+Promise.all       ──▶ ALL resolve ✅  or  ANY reject ❌  (fail-fast)
+Promise.allSettled──▶ ALL settle ✅❌      (never rejects)
+Promise.race      ──▶ FIRST to settle     (resolve ✅ or reject ❌)
+Promise.any       ──▶ FIRST to resolve ✅ or ALL reject ❌ (AggregateError)
+```
+
+---
+
 # Promise vs Callback
 
 | Callback | Promise |
@@ -342,6 +452,145 @@ try{
 
 ---
 
+# Common Promise APIs
+
+| API | Description |
+|------|-------------|
+| Promise.resolve() | Immediately resolved Promise |
+| Promise.reject() | Immediately rejected Promise |
+| Promise.all() | Wait for all |
+| Promise.allSettled() | Wait for all regardless of result |
+| Promise.race() | First settled wins |
+| Promise.any() | First success wins |
+
+---
+
+# Interview Questions
+
+## What is a Promise?
+
+An object representing future completion or failure of an async operation.
+
+---
+
+## Can a Promise change state?
+
+No.
+
+```
+Pending
+
+↓
+
+Fulfilled
+```
+
+OR
+
+```
+Pending
+
+↓
+
+Rejected
+```
+
+Never both.
+
+---
+
+## What does then() return?
+
+A new Promise.
+
+---
+
+## Difference between resolve() and reject()?
+
+resolve()
+
+```
+Success
+```
+
+reject()
+
+```
+Failure
+```
+
+---
+
+## Difference between Promise.all() and Promise.allSettled()?
+
+Promise.all()
+
+- Fails immediately if one Promise fails.
+
+Promise.allSettled()
+
+- Waits for every Promise.
+
+---
+
+## Difference between Promise.race() and Promise.any()?
+
+Promise.race()
+
+Returns first settled Promise.
+
+Can fail.
+
+Promise.any()
+
+Returns first successful Promise.
+
+Ignores failures.
+
+---
+
+## Is Promise synchronous or asynchronous?
+
+**Creating a Promise (`new Promise(...)`) is synchronous.**
+
+The callbacks registered with `.then()`, `.catch()`, and `.finally()` run asynchronously as **microtasks** after the current synchronous code finishes.
+
+Example:
+
+```javascript
+console.log("Start");
+
+Promise.resolve().then(() => {
+    console.log("Promise");
+});
+
+console.log("End");
+```
+
+Output
+
+```
+Start
+End
+Promise
+```
+
+---
+
+## Does Promise execute immediately?
+
+Yes.
+
+```javascript
+const p = new Promise(() => {
+    console.log("Runs immediately");
+});
+```
+
+The executor function runs as soon as the Promise is created.
+
+---
+
 # Common Interview One-Liners
 
 ✔ Promise represents future completion or failure.
@@ -367,3 +616,17 @@ try{
 ✔ Promise callbacks (`then`, `catch`, `finally`) execute as microtasks.
 
 ---
+
+# 30-Second Summary
+
+- Promise = Future value
+- States = Pending → Fulfilled / Rejected
+- `.then()` handles success
+- `.catch()` handles errors
+- `.finally()` always executes
+- `.then()` returns a new Promise
+- `Promise.all()` → All must succeed
+- `Promise.allSettled()` → Wait for all
+- `Promise.race()` → First settled wins
+- `Promise.any()` → First success wins
+- Promise callbacks run in the **Microtask Queue**
