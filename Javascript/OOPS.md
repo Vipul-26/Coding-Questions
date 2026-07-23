@@ -1,23 +1,25 @@
+# Object-Oriented Programming (OOP) in JavaScript
+
 # Table of Contents
 
 - [What is OOP?](#what-is-oop)
-- [Four Pillars of OOP](#four-pillars)
-- [Class vs Object](#class-vs-object)
+- [Four Pillars](#four-pillars)
 - [Object Literal](#object-literal)
-- [Constructor Function](#constructor-function-old-way)
+- [Constructor Function (Old Way)](#constructor-function-old-way)
 - [ES6 Class](#es6-class)
 - [`this` Keyword](#this-keyword)
 - [Encapsulation](#encapsulation)
-- [Private Fields (`#`)](#private-fields-real-encapsulation)
+- [Private Fields (Real Encapsulation)](#private-fields-real-encapsulation)
 - [Abstraction](#abstraction)
 - [Inheritance](#inheritance)
-- [`super()`](#super)
+- [Using `super()`](#using-super)
 - [Polymorphism](#polymorphism)
 - [Method Overriding](#method-overriding)
 - [Static Methods](#static-methods)
 - [Getter & Setter](#getter--setter)
 - [Prototype](#prototype)
 - [Prototype Chain](#prototype-chain)
+- [Class vs Object](#class-vs-object)
 - [Class vs Constructor Function](#class-vs-constructor-function)
 - [`Object.create()`](#objectcreate)
 - [`instanceof`](#instanceof)
@@ -31,6 +33,8 @@
 - [Interview Questions](#interview-questions)
 - [Common Interview One-Liners](#common-interview-one-liners)
 - [30-Second Summary](#30-second-summary)
+
+---
 
 # What is OOP?
 
@@ -331,13 +335,13 @@ Without calling `super()`, JavaScript throws a **ReferenceError** because the pa
 
 ---
 
-## Interview One-Liner
+## Inheritance Interview One-Liner
 
 > **Inheritance allows a child class to acquire the properties and methods of a parent class, promoting code reuse and extensibility.**
 
 ---
 
-## Common Interview Questions
+## Inheritance — Common Interview Questions
 
 ### Q. Which keyword is used for inheritance?
 
@@ -468,7 +472,7 @@ Internally, JavaScript links the prototypes so that if a property or method isn'
 
 ---
 
-## 30-Second Summary
+## Inheritance — Quick Summary
 
 - Inheritance enables one class to reuse another class's properties and methods.
 - Implemented using the `extends` keyword.
@@ -477,6 +481,7 @@ Internally, JavaScript links the prototypes so that if a property or method isn'
 - JavaScript inheritance works through the **prototype chain**.
 - Supports **single inheritance** only.
 - Prefer **Composition over Inheritance** for complex applications.
+
 ---
 
 # Polymorphism
